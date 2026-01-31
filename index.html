@@ -2,153 +2,131 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Seni Seviyorum Ecrin</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap');
 
 * { margin:0; padding:0; box-sizing:border-box; }
 
 body {
-  height:100vh;
-  overflow:hidden;
+  font-family:'Montserrat', sans-serif;
   background:white;
-  font-family:'Playfair Display', serif;
+  overflow:hidden;
 }
 
-/* KALP EVRENİ */
-.bg {
+/* YAZIDAN KALP DESENİ */
+.pattern {
   position:fixed;
   inset:0;
   display:grid;
-  grid-template-columns:repeat(auto-fill, 36px);
-  grid-auto-rows:36px;
-  opacity:.95;
+  grid-template-columns:repeat(auto-fill, minmax(120px,1fr));
+  gap:10px;
+  padding:10px;
   z-index:0;
 }
-.heart {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
+.pattern span {
+  font-size:12px;
+  line-height:1.2;
+  text-align:center;
+  color:#000;
+  opacity:.9;
 }
 
-/* KARARTMA */
+/* ÜST KATMAN */
 .overlay {
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.35);
+  background:rgba(0,0,0,.25);
   z-index:1;
 }
 
-/* ANA YAZI */
+/* MERKEZ YAZI */
 .center {
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  font-family:'Great Vibes', cursive;
-  font-size:86px;
+  font-size:36px;
   color:white;
   text-align:center;
   z-index:3;
-  text-shadow:0 0 25px rgba(0,0,0,.8);
-  animation: heartbeat 2.2s infinite;
+  animation:pulse 2.5s infinite;
+}
+@keyframes pulse {
+  0%,100% { transform:translate(-50%,-50%) scale(1); }
+  50% { transform:translate(-50%,-50%) scale(1.06); }
 }
 
-@keyframes heartbeat {
-  0% { transform:translate(-50%,-50%) scale(1); }
-  25% { transform:translate(-50%,-50%) scale(1.08); }
-  40% { transform:translate(-50%,-50%) scale(1); }
-  60% { transform:translate(-50%,-50%) scale(1.12); }
-  100% { transform:translate(-50%,-50%) scale(1); }
-}
-
-/* SPAM AŞK YAZISI */
-.love {
+/* HER YERDE YAZI */
+.float {
   position:absolute;
-  font-family:'Great Vibes', cursive;
-  font-size:34px;
-  white-space:nowrap;
-  opacity:0;
+  font-size:14px;
+  opacity:.8;
+  animation:fadeMove linear forwards;
   z-index:2;
-  animation: move linear forwards;
 }
-
-@keyframes move {
-  0% { opacity:0; transform:translateX(-80px); }
+@keyframes fadeMove {
+  0% { opacity:0; transform:translateY(10px); }
   10% { opacity:1; }
-  100% { opacity:0; transform:translateX(120px); }
+  100% { opacity:0; transform:translateY(-40px); }
 }
 
-/* LALELER */
+/* LALE */
 .tulip {
   position:absolute;
-  font-size:40px;
+  font-size:30px;
   z-index:2;
-  animation: float 6s ease-in-out infinite;
+  animation:sway 5s ease-in-out infinite;
 }
-
-@keyframes float {
-  0% { transform:translateY(0) rotate(-5deg); }
-  50% { transform:translateY(-30px) rotate(5deg); }
-  100% { transform:translateY(0) rotate(-5deg); }
-}
-
-/* AÇILIŞ */
-.fade {
-  animation: fadeIn 2.5s ease forwards;
-}
-@keyframes fadeIn {
-  from { opacity:0; }
-  to { opacity:1; }
+@keyframes sway {
+  0% { transform:rotate(-4deg); }
+  50% { transform:rotate(4deg); }
+  100% { transform:rotate(-4deg); }
 }
 </style>
 </head>
 
-<body class="fade">
+<body>
 
-<div class="bg" id="bg"></div>
+<div class="pattern" id="pattern"></div>
 <div class="overlay"></div>
-
 <div class="center">Seni seviyorum Ecrin</div>
 
 <script>
-const hearts = ["💜","💙","🖤"];
-const colors = ["#6a35ff","#243bff","#000"];
+const colors = ["#5b2cff","#1e3cff","#000"];
 
-/* KALP EVRENİ */
-const bg = document.getElementById("bg");
-for(let i=0;i<1000;i++){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.textContent=hearts[Math.floor(Math.random()*3)];
-  bg.appendChild(h);
+/* KALP DESENİ YAZI */
+const p = document.getElementById("pattern");
+for(let i=0;i<120;i++){
+  const s=document.createElement("span");
+  s.textContent="Seni seviyorum Ecrin";
+  s.style.color=colors[Math.floor(Math.random()*3)];
+  p.appendChild(s);
 }
 
-/* AŞK YAĞMURU */
+/* HER YERDE YAZI */
 setInterval(()=>{
-  for(let i=0;i<3;i++){
-    const t=document.createElement("div");
-    t.className="love";
-    t.textContent="Seni seviyorum Ecrin";
-    t.style.top=Math.random()*100+"%";
-    t.style.left=Math.random()*100+"%";
-    t.style.color=colors[Math.floor(Math.random()*3)];
-    t.style.animationDuration=3+Math.random()*4+"s";
-    document.body.appendChild(t);
-    setTimeout(()=>t.remove(),7000);
-  }
-},250);
+  const t=document.createElement("div");
+  t.className="float";
+  t.textContent="seni seviyorum ecrin";
+  t.style.left=Math.random()*90+"%";
+  t.style.top=Math.random()*100+"%";
+  t.style.color=colors[Math.floor(Math.random()*3)];
+  t.style.animationDuration=3+Math.random()*3+"s";
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),6000);
+},300);
 
 /* LALELER */
-for(let i=0;i<14;i++){
+for(let i=0;i<8;i++){
   const l=document.createElement("div");
   l.className="tulip";
   l.textContent="🌷";
-  l.style.left=Math.random()*100+"%";
-  l.style.top=Math.random()*100+"%";
-  l.style.filter="drop-shadow(0 0 8px "+colors[Math.floor(Math.random()*3)]+")";
+  l.style.left=Math.random()*90+"%";
+  l.style.top=Math.random()*90+"%";
+  l.style.filter="drop-shadow(0 0 6px "+colors[Math.floor(Math.random()*3)]+")";
   document.body.appendChild(l);
 }
 </script>
