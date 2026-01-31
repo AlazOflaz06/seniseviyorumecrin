@@ -2,11 +2,11 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Seni Seviyorum Ecrin'im</title>
+  <title>Seni Seviyorum Nisa'm</title>
   <style>
     body {
       margin: 0;
-      background: white; /* ARKA PLAN BEYAZ */
+      background: black;
       overflow: hidden;
     }
     .love-text {
@@ -25,28 +25,33 @@
 </head>
 <body>
   <script>
-    /* SADECE RENKLER DEĞİŞTİ */
-    const colors = ["#0b1d51", "#5b2cff", "#000000"]; // Lacivert, Mor, Siyah
+    const colors = ["#ff4d4d", "#ff66cc", "#66ff66", "#66ccff", "#ffff66", "#ff9966", "#ffffff"];
 
     function createLoveText() {
       const text = document.createElement("div");
       text.classList.add("love-text");
-      text.innerText = "❤️ Seni Seviyorum Ecrin'im ❤️";
+      text.innerText = "❤️ Seni Seviyorum Nisa'm ❤️";
       
+      // Rastgele konum
       text.style.top = Math.random() * window.innerHeight + "px";
       text.style.left = Math.random() * window.innerWidth + "px";
+      
+      // Rastgele renk
       text.style.color = colors[Math.floor(Math.random() * colors.length)];
+      
+      // Rastgele boyut
       text.style.fontSize = (20 + Math.random() * 30) + "px";
 
       document.body.appendChild(text);
       setTimeout(() => text.remove(), 2000); 
     }
 
+    // Aynı anda sadece 10 yazı oluştur
     setInterval(() => {
       for (let i = 0; i < 10; i++) {
         createLoveText();
       }
-    }, 200);
+    }, 200); // her 0.2 saniyede tekrar
   </script>
 </body>
 </html>
