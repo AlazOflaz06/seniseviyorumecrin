@@ -1,135 +1,57 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seni Seviyorum Ecrin</title>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap');
-
-* { margin:0; padding:0; box-sizing:border-box; }
-
-body {
-  font-family:'Montserrat', sans-serif;
-  background:white;
-  overflow:hidden;
-}
-
-/* YAZIDAN KALP DESENİ */
-.pattern {
-  position:fixed;
-  inset:0;
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(120px,1fr));
-  gap:10px;
-  padding:10px;
-  z-index:0;
-}
-.pattern span {
-  font-size:12px;
-  line-height:1.2;
-  text-align:center;
-  color:#000;
-  opacity:.9;
-}
-
-/* ÜST KATMAN */
-.overlay {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.25);
-  z-index:1;
-}
-
-/* MERKEZ YAZI */
-.center {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:36px;
-  color:white;
-  text-align:center;
-  z-index:3;
-  animation:pulse 2.5s infinite;
-}
-@keyframes pulse {
-  0%,100% { transform:translate(-50%,-50%) scale(1); }
-  50% { transform:translate(-50%,-50%) scale(1.06); }
-}
-
-/* HER YERDE YAZI */
-.float {
-  position:absolute;
-  font-size:14px;
-  opacity:.8;
-  animation:fadeMove linear forwards;
-  z-index:2;
-}
-@keyframes fadeMove {
-  0% { opacity:0; transform:translateY(10px); }
-  10% { opacity:1; }
-  100% { opacity:0; transform:translateY(-40px); }
-}
-
-/* LALE */
-.tulip {
-  position:absolute;
-  font-size:30px;
-  z-index:2;
-  animation:sway 5s ease-in-out infinite;
-}
-@keyframes sway {
-  0% { transform:rotate(-4deg); }
-  50% { transform:rotate(4deg); }
-  100% { transform:rotate(-4deg); }
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Seni Seviyorum Ecrin'im</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+    }
+    .love-text {
+      position: absolute;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      white-space: nowrap;
+      animation: zoomIn 2s linear forwards;
+    }
+    @keyframes zoomIn {
+      0% { transform: scale(0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: scale(6); opacity: 0; }
+    }
+  </style>
 </head>
-
 <body>
+  <script>
+    const colors = ["#ff4d4d", "#ff66cc", "#66ff66", "#66ccff", "#ffff66", "#ff9966", "#ffffff"];
 
-<div class="pattern" id="pattern"></div>
-<div class="overlay"></div>
-<div class="center">Seni seviyorum Ecrin</div>
+    function createLoveText() {
+      const text = document.createElement("div");
+      text.classList.add("love-text");
+      text.innerText = "❤️ Seni Seviyorum Ecrin'im ❤️";
+      
+      // Rastgele konum
+      text.style.top = Math.random() * window.innerHeight + "px";
+      text.style.left = Math.random() * window.innerWidth + "px";
+      
+      // Rastgele renk
+      text.style.color = colors[Math.floor(Math.random() * colors.length)];
+      
+      // Rastgele boyut
+      text.style.fontSize = (20 + Math.random() * 30) + "px";
 
-<script>
-const colors = ["#5b2cff","#1e3cff","#000"];
+      document.body.appendChild(text);
+      setTimeout(() => text.remove(), 2000); 
+    }
 
-/* KALP DESENİ YAZI */
-const p = document.getElementById("pattern");
-for(let i=0;i<120;i++){
-  const s=document.createElement("span");
-  s.textContent="Seni seviyorum Ecrin";
-  s.style.color=colors[Math.floor(Math.random()*3)];
-  p.appendChild(s);
-}
-
-/* HER YERDE YAZI */
-setInterval(()=>{
-  const t=document.createElement("div");
-  t.className="float";
-  t.textContent="seni seviyorum ecrin";
-  t.style.left=Math.random()*90+"%";
-  t.style.top=Math.random()*100+"%";
-  t.style.color=colors[Math.floor(Math.random()*3)];
-  t.style.animationDuration=3+Math.random()*3+"s";
-  document.body.appendChild(t);
-  setTimeout(()=>t.remove(),6000);
-},300);
-
-/* LALELER */
-for(let i=0;i<8;i++){
-  const l=document.createElement("div");
-  l.className="tulip";
-  l.textContent="🌷";
-  l.style.left=Math.random()*90+"%";
-  l.style.top=Math.random()*90+"%";
-  l.style.filter="drop-shadow(0 0 6px "+colors[Math.floor(Math.random()*3)]+")";
-  document.body.appendChild(l);
-}
-</script>
-
+    // Aynı anda sadece 10 yazı oluştur
+    setInterval(() => {
+      for (let i = 0; i < 10; i++) {
+        createLoveText();
+      }
+    }, 200); // her 0.2 saniyede tekrar
+  </script>
 </body>
 </html>
